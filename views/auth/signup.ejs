@@ -28,7 +28,7 @@
         <!-- Hero Area End -->
         
 
-        <form action="/<%= mode=='employer'?'signup/employer':'signup/employee' %>" method="POST" class="my-5 container">
+        <form action="/<%= mode=='company'?'signup/company':'signup/employee' %>" method="POST" class="my-5 container">
 
             <div class="mt-30 d-flex">
                 <input type="email" name="email" placeholder="Email"
@@ -37,12 +37,12 @@
             </div>
 
             <div class="mt-30 d-flex">
-                <input type="text" name="name" placeholder="<%= mode=='employer'?'Company Name':'Name' %>"
-                onfocus="this.placeholder = ''" onblur='this.placeholder = "<%= mode==`employer`?`Company Name`: `Name` %>"' required
+                <input type="text" name="name" placeholder="<%= mode=='company'?'Company Name':'Name' %>"
+                onfocus="this.placeholder = ''" onblur='this.placeholder = "<%= mode==`company`?`Company Name`: `Name` %>"' required
                 class="single-input mr-3">
             </div>
 
-            <% if(mode==='employer'){ %>
+            <% if(mode==='company'){ %>
                 <div class="mt-30 d-flex">
                     <input type="url" name="website" placeholder="Company's Website"
                     onfocus="this.placeholder = ''" onblur="this.placeholder = `Company's Website`" required
@@ -50,7 +50,7 @@
                 </div>
 
                 <div class="mt-30">
-                    <textarea name="about" class="single-textarea" placeholder="About Company" onfocus="this.placeholder = ''"
+                    <textarea name="description" class="single-textarea" placeholder="About Company" onfocus="this.placeholder = ''"
                         onblur="this.placeholder = 'About Company'" required></textarea>
                 </div>
             <% } %> 
@@ -60,6 +60,14 @@
                 onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
                 class="single-input mr-3">
             </div>
+
+            <div class="mt-30 d-flex">
+                <input type="password" name="c_password" placeholder="Confirm Password"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Confirm Password'" required
+                class="single-input mr-3">
+            </div>
+
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
             <button type="submit" class="genric-btn primary e-large mt-30">Signup</button>
         </form>

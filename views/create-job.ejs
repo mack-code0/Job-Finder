@@ -1,13 +1,13 @@
 <!doctype html>
 <html class="no-js" lang="zxx">
     
-    <%- include('../includes/Head.ejs') %> 
+    <%- include('./includes/Head.ejs') %> 
 
    <body>
 
-    <%- include('../includes/Preloader.ejs') %> 
+    <%- include('./includes/Preloader.ejs') %> 
 
-    <%- include('../includes/Header.ejs') %> 
+    <%- include('./includes/Header.ejs') %> 
 
     <main>
 
@@ -101,16 +101,18 @@
                     onblur="this.placeholder = 'Education + Experience'" required></textarea>
             </div>
             
-            <button type="submit" class="genric-btn primary e-large mt-30">Extra Large</button>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+            <button type="submit" class="genric-btn primary e-large mt-30">Done</button>
         </form>
 
     </main>
 
-    <%- include('../includes/Footer.ejs') %> 
+    <%- include('./includes/Footer.ejs') %> 
 
 	<!-- JS here -->
 	
-        <%- include('../includes/Scripts.ejs') %> 
+        <%- include('./includes/Scripts.ejs') %> 
         
     </body>
 </html>
