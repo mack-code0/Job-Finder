@@ -1,0 +1,76 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    
+    <%- include('../includes/Head.ejs') %> 
+
+   <body>
+
+    <%- include('../includes/Preloader.ejs') %> 
+
+    <%- include('../includes/Header.ejs') %> 
+
+    <main>
+
+        <!-- Hero Area Start-->
+        <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="/assets/img/hero/about.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>Sign Up</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!-- Hero Area End -->
+        
+
+        <form action="/<%= mode=='employer'?'signup/employer':'signup/employee' %>" method="POST" class="my-5 container">
+
+            <div class="mt-30 d-flex">
+                <input type="email" name="email" placeholder="Email"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email'" required
+                class="single-input mr-3">
+            </div>
+
+            <div class="mt-30 d-flex">
+                <input type="text" name="name" placeholder="<%= mode=='employer'?'Company Name':'Name' %>"
+                onfocus="this.placeholder = ''" onblur='this.placeholder = "<%= mode==`employer`?`Company Name`: `Name` %>"' required
+                class="single-input mr-3">
+            </div>
+
+            <% if(mode==='employer'){ %>
+                <div class="mt-30 d-flex">
+                    <input type="url" name="website" placeholder="Company's Website"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = `Company's Website`" required
+                    class="single-input mr-3">
+                </div>
+
+                <div class="mt-30">
+                    <textarea name="about" class="single-textarea" placeholder="About Company" onfocus="this.placeholder = ''"
+                        onblur="this.placeholder = 'About Company'" required></textarea>
+                </div>
+            <% } %> 
+
+            <div class="mt-30 d-flex">
+                <input type="password" name="password" placeholder="Password"
+                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'" required
+                class="single-input mr-3">
+            </div>
+
+            <button type="submit" class="genric-btn primary e-large mt-30">Signup</button>
+        </form>
+
+    </main>
+
+    <%- include('../includes/Footer.ejs') %> 
+
+	<!-- JS here -->
+	
+        <%- include('../includes/Scripts.ejs') %> 
+        
+    </body>
+</html>
