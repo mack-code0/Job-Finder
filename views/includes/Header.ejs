@@ -34,13 +34,17 @@
                             <!-- Header-btn -->
                             <div class="header-btn d-none f-right d-lg-block">
                                 <% if(isAuthenticated){ %>
-                                    <% if(companyMode){ %> 
-                                        <a href="/create-job" class="btn head-btn1">Create Job</a>
-                                    <% } %> 
+                                    <form action="/logout" method="post">
+                                        <% if(companyMode){ %> 
+                                            <a href="/create-job" class="btn head-btn1">Create Job</a>
+                                        <% } %> 
 
-                                    <% if(!companyMode){ %> 
-                                        <a href="/apply-job" class="btn head-btn1">Apply</a>
-                                    <% } %> 
+                                        <% if(!companyMode){ %> 
+                                            <a href="/apply-job" class="btn head-btn1">Apply</a>
+                                        <% } %> 
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <button type="submit" class="btn head-btn2">Logout</button>
+                                    </form>
                                 <% } %> 
 
                                 <% if(!isAuthenticated){ %> 

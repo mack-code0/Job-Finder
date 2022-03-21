@@ -12,12 +12,12 @@
 
         <!-- Hero Area Start-->
         <div class="slider-area ">
-        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="/assets/img/hero/about.jpg">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="hero-cap text-center">
-                            <h2>UI/UX Designer</h2>
+                            <h2>- <%= job.role %> -</h2>
                         </div>
                     </div>
                 </div>
@@ -100,7 +100,19 @@
                               <!-- <li>Application date : <span>12 Sep 2020</span></li> -->
                           </ul>
                          <div class="apply-btn2">
-                            <a href="#" class="btn">Apply Now</a>
+                            <% if(!companyMode){ %> 
+                                <a href="/job-application/<%= job._id %>" class="btn">Apply Now</a>
+                            <% } %> 
+                            <% if(companyMode){ %>
+                                <div class="d-flex">
+                                    <a href="/edit-job/<%= job._id %>" class="genric-btn primary mr-3">Edit</a>
+                                    <form action="/delete-job" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                        <input type="hidden" name="jobId" value="<%= job._id %>">
+                                        <button class="genric-btn danger">Delete</button>
+                                    </form>
+                                </div>
+                            <% } %> 
                          </div>
                        </div>
                         <div class="post-details4  mb-50">

@@ -12,7 +12,7 @@
     <main>
 
         <!-- Hero Area Start-->
-        <div class="slider-area ">
+        <!-- <div class="slider-area ">
         <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
             <div class="container">
                 <div class="row">
@@ -24,83 +24,114 @@
                 </div>
             </div>
         </div>
-        </div>
+        </div> -->
         <!-- Hero Area End -->
         
 
-        <form action="/create-job" method="POST" class="my-5 container">
+        <form action="/<%= edit ? 'edit-job':'create-job' %>" method="POST" class="my-5 container w-75" novalidate>
+            <h1 style="font-weight: 700;" class="mb-5"><%= edit ? 'EDIT JOB':'CREATE JOB' %></h1>
 
-            <div class="mt-10 d-flex">
-                <input type="text" name="agency" placeholder="Agency of Role"
-                onfocus="this.placeholder = ''" onblur="this.placeholder = 'Agency of Role'" required
-                class="single-input mr-3">
-
-                <input type="text" name="role" placeholder="Role Needed"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Role Needed'" required
-                    class="single-input ml-3">                  
-            </div>
-
-            <div class="mt-30 d-flex">
-                <div class="input-group-icon w-50 mr-3">
-                    <div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
-                    <div class="form-select" id="default-select"">
-                        <select name="country">
-                            <option>Country</option>
-                            <option value="Ghana">Ghana</option>
-                            <option value="Nigeria">Nigeria</option>
-                        </select>
-                    </div>
+            <div class="d-flex">
+                <div class="mr-3 w-50">
+                    <label for="">Agency</label>
+                    <input type="text" name="agency" placeholder="" value="<%= edit ? job.agency:'' %>"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                    class="single-input">
                 </div>
 
-                <div class="input-group-icon w-50 ml-3">
-                    <div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
-                    <div class="form-select" id="default-select"">
-                        <select name="city">
-                            <option>City</option>
-                            <option value="Accra">Accra</option>
-                            <option value="Lagos">Lagos</option>
-                        </select>
-                    </div>
+                <div class="ml-3 w-50">
+                    <label for="">Role</label>
+                    <input type="text" name="role" placeholder="" value="<%= edit ? job.role:'' %>"
+                        onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                        class="single-input">                  
                 </div>
             </div>
 
             <div class="mt-30 d-flex">
-                <input type="number" name="salary_from" placeholder="Salary(From)"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Salary(From)'" required
-                    class="single-input mr-3">
+                <div class="w-50 mr-3">
+                    <label for="">Country</label>
+                    <div class="input-group-icon">
+                        <div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                        <div class="form-select" id="default-select"">
+                            <select name="country">
+                                <option>-- Select --</option>
+                                <option <% if(edit){ %><%= job.location.country==='Ghana'?"selected":"" %><% } %> value="Ghana">Ghana</option>
+                                <option <% if(edit){ %><%= job.location.country==='Nigeria'?"selected":"" %><% } %> value="Nigeria">Nigeria</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
 
-                    <input type="number" name="salary_to" placeholder="Salary(To)"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Salary(To)'" required
-                    class="single-input mx-3">
+                <div class="w-50 ml-3">
+                    <label for="">City</label>
+                    <div class="input-group-icon">
+                        <div class="icon"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                        <div class="form-select" id="default-select"">
+                            <select name="city">
+                                <option>-- Select --</option>
+                                <option <% if(edit){ %><%= job.location.city==='Accra'?"selected":"" %><% } %> value="Accra">Accra</option>
+                                <option <% if(edit){ %><%= job.location.city==='Lagos'?"selected":"" %><% } %> value="Lagos">Lagos</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    <input type="number" name="vacancy_av" placeholder="Number of People Needed"
-                    onfocus="this.placeholder = ''" onblur="this.placeholder = 'Number of People Needed'" required
-                    class="single-input mx-3">
+            <div class="mt-30 d-flex">
+                <div class="mr-3">
+                    <label for="">Salary(From)</label>
+                    <input type="number" name="salary_from" placeholder=""  value="<%= edit ? job.salary.from:'' %>"
+                        onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                        class="single-input">
+                </div>
 
-                    <div class="default-select ml-3" id="default-select"">
+                <div class="mx-3">
+                    <label for="">Salary(To)</label>
+                    <input type="number" name="salary_to" placeholder="" value="<%= edit ? job.salary.to:'' %>"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                    class="single-input">
+                </div>
+
+                <div class="mx-3">
+                    <label for="">No. of People Needed</label>
+                    <input type="number" name="vacancy_av" placeholder="" value="<%= edit ? job.vacancy_av:'' %>"
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                    class="single-input">
+                </div>
+
+                <div class="ml-3">
+                    <label for="">Job Nature</label>
+                    <div class="default-select" id="default-select"">
                         <select name="nature">
-                            <option>Job Nature</option>
-                            <option value="1">Fulltime</option>
-                            <option value="1">Part-Time</option>
+                            <option>-- Select --</option>
+                            <option <% if(edit){ %><%= job.nature==='Full-Time'?"selected":"" %><% } %> value="Full-Time">Full-Time</option>
+                            <option <% if(edit){ %><%= job.nature==='Part-Time'?"selected":"" %><% } %> value="Part-Time">Part-Time</option>
                         </select>
                     </div>
+                </div>
             </div>
 
             <div class="mt-30">
-                <textarea name="description" class="single-textarea" placeholder="Job Description" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Message'" required></textarea>
+                <label for="">Description</label>
+                <textarea name="description" class="single-textarea" placeholder="" onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = ''" required><%= edit ? job.description:'' %></textarea>
             </div>
 
             <div class="mt-30">
-                <textarea name="abilities" class="single-textarea" placeholder="Required Knowledge, Skills, Abilities" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Required Knowledge, Skills, Abilities'" required></textarea>
+                <label for="">Required Knowledge, Skills, Abilities</label>
+                <textarea name="abilities" class="single-textarea" placeholder="" onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = ''" required><% if(edit){ %><% for(ability of job.abilities){ %><%= ability+"\r\n" %><% } %><% } %></textarea>
             </div>
 
             <div class="mt-30">
-                <textarea name="experience" class="single-textarea" placeholder="Education + Experience" onfocus="this.placeholder = ''"
-                    onblur="this.placeholder = 'Education + Experience'" required></textarea>
+                <label for="">Education and Experience</label>
+                <textarea name="experience" class="single-textarea" placeholder="" onfocus="this.placeholder = ''"
+                    onblur="this.placeholder = ''" required><% if(edit){ %><% for(experience of job.experience){ %><%= experience+"\r\n" %><% } %><% } %></textarea>
             </div>
             
+            <% if(edit){ %>
+                <input type="hidden" name="jobId" value="<%= job._id %>">
+            <% } %>  
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
             <button type="submit" class="genric-btn primary e-large mt-30">Done</button>

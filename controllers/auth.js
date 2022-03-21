@@ -4,7 +4,6 @@ const bcrypt = require("bcryptjs")
 
 
 exports.getSignup = (req, res, next) => {
-    console.log(req.session);
     const mode = req.query.mode || ''
     res.render('auth/signup', {
         path: "/signup",
@@ -22,108 +21,103 @@ exports.getLogin = (req, res, next) => {
 
 
 
-exports.postLoginCompany = (req, res, next) => {
+exports.postLoginCompany = async (req, res, next) => {
     const { email, password } = req.body
 
-    Company.findOne({ email })
-        .then(user => {
-            if (!user) {
-                // Add flash message here
-                return res.redirect('/login')
-            }
+    try {
+        const user = await Company.findOne({ email })
+        if (!user) {
+            // Add flash message here
+            return res.redirect('/login')
+        }
 
-            bcrypt.compare(password, user.password)
-            .then(isMatch => {
-                if (!isMatch) {
-                    // Add Flash Message here
-                    return res.redirect('/login')
-                }
-    
-                req.session.isLoggedIn = true
-                req.session.company = user.isCompany
-                req.session.user = user
-                res.redirect("/")
-            })
-        })
-        .catch(error => {
-            errorHandler(error, next)
-        })
+        const passwordMatch = await bcrypt.compare(password, user.password)
+        if (!passwordMatch) {
+            // Add Flash Message here
+            return res.redirect('/login')
+        }
+
+        req.session.isLoggedIn = true
+        req.session.companyMode = user.isCompany
+        req.session.user_id = user._id.toString()
+        res.redirect("/")
+    } catch (error) {
+        errorHandler(error, next)
+    }
 }
 
-exports.postLoginEmployee = (req, res, next) => {
+exports.postLoginEmployee = async (req, res, next) => {
     const { email, password } = req.body
 
-    Employee.findOne({ email })
-        .then(user => {
-            if (!user) {
-                // Add flash message here
-                return res.render('auth/login', {
-                    path: "/login",
-                    title: "Login",
-                })
-            }
+    try {
+        const user = await Employee.findOne({ email })
+        if (!user) {
+            // Add flash message here
+            return res.redirect('/login')
+        }
 
-            bcrypt.compare(password, user.password)
-                .then(isMatch => {
-                    if (!isMatch) {
-                        // Add Flash Message here
-                        return res.redirect('/login')
-                    }
+        const passwordMatch = await bcrypt.compare(password, user.password)
+        if (!passwordMatch) {
+            // Add Flash Message here
+            return res.redirect('/login')
+        }
 
-                    req.session.isLoggedIn = true
-                    req.session.company = user.isCompany
-                    req.session.user = user
-                    res.redirect("/")
-                })
-        })
-        .catch(error => {
-            errorHandler(error, next)
-        })
+        req.session.isLoggedIn = true
+        req.session.companyMode = false
+        req.session.user_id = user._id.toString()
+        res.redirect("/")
+    } catch (error) {
+        errorHandler(error, next)
+    }
 }
 
-exports.postSignupEmployee = (req, res, next) => {
+exports.postSignupEmployee = async (req, res, next) => {
     const { email, password, name } = req.body
 
-    bcrypt.hash(password, 12)
-        .then(hashed => {
-            const employee = new Employee({
-                email,
-                password: hashed,
-                name
-            })
+    try {
+        const hashed = await bcrypt.hash(password, 12)
+        const employee = new Employee({
+            email,
+            password: hashed,
+            name
+        })
 
-            return employee.save()
-        })
-        .then((result) => {
-            console.log(result);
-            res.redirect("/login")
-        })
-        .catch((err) => {
-            errorHandler(err, next)
-        });
+        const saveEmployee = await employee.save()
+        console.log(saveEmployee);
+        res.redirect("/login")
+    } catch (error) {
+        errorHandler(error, next)
+    }
 }
 
-exports.postSignupCompany = (req, res, next) => {
+exports.postSignupCompany = async (req, res, next) => {
     const { email, password, name, description, website } = req.body
 
-
-    bcrypt.hash(password, 12)
-        .then(hashed => {
-            const company = new Company({
-                email,
-                password: hashed,
-                name,
-                description,
-                website
-            })
-
-            return company.save()
+    try {
+        const hashed = await bcrypt.hash(password, 12)
+        const company = new Company({
+            email,
+            password: hashed,
+            name,
+            description,
+            website
         })
-        .then((result) => {
-            console.log(result);
-            res.redirect("/login")
-        })
-        .catch((error) => {
+
+        const saveCompany = await company.save()
+        console.log(saveCompany);
+        res.redirect("/login")
+    } catch (error) {
+        errorHandler(error, next)
+    }
+}
+
+
+exports.logout = (req, res, next) => {
+    req.session.destroy(error=>{
+        if(error){
             errorHandler(error, next)
-        });
+        }
+        
+        res.redirect("/login")
+    })
 }

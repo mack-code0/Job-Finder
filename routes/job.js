@@ -16,9 +16,6 @@ router.get("/job-details/:jobId", JobController.getJobDetails)
 
 router.get("/contact", JobController.getContact)
 
-router.get('/create-job', auth.checkisLoggedIn, auth.checkMode, JobController.getCreateJobPage)
-
-router.post('/create-job', auth.checkisLoggedIn, auth.checkMode, JobController.createJob)
 
 
 

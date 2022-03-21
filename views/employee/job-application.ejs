@@ -1,0 +1,68 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+    
+    <%- include('../includes/Head.ejs') %> 
+
+   <body>
+
+    <%- include('../includes/Preloader.ejs') %> 
+
+    <%- include('../includes/Header.ejs') %> 
+
+    <main>
+
+        <!-- Hero Area Start-->
+        <!-- <div class="slider-area ">
+        <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center">
+                            <h2>Create Job</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div> -->
+        <!-- Hero Area End -->
+        
+
+        <form action="/job-application" method="POST" class="my-5 container w-75" novalidate>
+            <h1 style="font-weight: 700;" class="mb-5">Application for the role of a <%= job.role %></h1>
+
+            <div class="d-flex">
+                <div class="mr-3 w-50">
+                    <label for="">Full Name</label>
+                    <input type="text" name="full_name" placeholder="" value=""
+                    onfocus="this.placeholder = ''" onblur="this.placeholder = ''" required
+                    class="single-input">
+                </div>
+
+                <!-- <div class="ml-3 w-50">
+                    <label for="">CV</label>
+                    <input type="file" name="cv" required class="single-input">                  
+                </div> -->
+            </div>
+
+            <div class="mt-30">
+                <label for="">Cover Letter</label>
+                <textarea name="cover_letter" class="single-textarea" required></textarea>
+            </div>
+
+            <input type="hidden" name="jobId" value="<%= job._id %>">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+            <button type="submit" class="genric-btn primary e-large mt-30">Submit</button>
+        </form>
+
+    </main>
+
+    <%- include('../includes/Footer.ejs') %> 
+
+	<!-- JS here -->
+	
+        <%- include('../includes/Scripts.ejs') %> 
+        
+    </body>
+</html>

@@ -4,7 +4,7 @@
          <title><%= title %>  </title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="site.webmanifest">
+        <!-- <link rel="manifest" href="site.webmanifest"> -->
 		<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
 
 		<!-- CSS here -->
@@ -20,4 +20,24 @@
             <link rel="stylesheet" href="/assets/css/slick.css">
             <link rel="stylesheet" href="/assets/css/nice-select.css">
             <link rel="stylesheet" href="/assets/css/style.css">
+
+            <style>
+                label{
+                    font-weight: 700;
+                    /* color: #0f1644 !important; */
+                }
+                input,
+                textarea,
+                .nice-select{
+                    border: 1px solid #f9f9ff !important;
+                    transition: 0.2s all;
+                    font-size: 14px !important;
+                }
+                input:focus,
+                textarea:focus,
+                .nice-select:focus,
+                ul.list{
+                    border: 1px solid #1f2b7b !important;
+                }
+            </style>
    </head>
