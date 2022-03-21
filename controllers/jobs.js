@@ -16,13 +16,23 @@ exports.getAbout = (req, res, next) => {
 }
 
 exports.getJobListing = async (req, res, next) => {
+    const holder = req.query
+    if(holder.location){
+        holder["location.country"] = req.query.location
+        delete holder.location
+    }
     try {
-        const jobs = await Job.find()
+        const totalJobs = await Job.countDocuments().where(holder)
+        const jobs = await Job.find().where(holder)
+
+        console.log(holder);
 
         res.render("job-listing", {
             path: "/job-listing",
             title: "Job Listing",
-            jobs
+            jobs,
+            totalJobs,
+            checked: {...holder}
         })
     } catch (error) {
         errorHandler(error, next)

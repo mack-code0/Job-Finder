@@ -56,9 +56,11 @@ const AuthRoutes = require("./routes/auth")
 const JobRoutes = require("./routes/job")
 const CompanyRoutes = require("./routes/company")
 const EmployeeRoutes = require("./routes/employee")
+const QueryJobsRoute = require("./routes/queryJobs")
 const ErrorController = require("./controllers/error")
 
 
+app.use(QueryJobsRoute)
 app.use(AuthRoutes)
 app.use(JobRoutes)
 app.use(CompanyRoutes)

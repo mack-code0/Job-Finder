@@ -9,23 +9,8 @@
     <%- include('./includes/Header.ejs') %> 
     <main>
 
-        <!-- Hero Area Start-->
-        <div class="slider-area ">
-            <div class="single-slider section-overly slider-height2 d-flex align-items-center" data-background="assets/img/hero/about.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="hero-cap text-center">
-                                <h2>Get your job</h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Hero Area End -->
         <!-- Job List Area Start -->
-        <div class="job-listing-area pt-120 pb-120">
+        <div class="job-listing-area pt-60 pb-120">
             <div class="container">
                 <div class="row">
                     <!-- Left content -->
@@ -54,12 +39,11 @@
                                </div>
                                 <!-- Select job items start -->
                                 <div class="select-job-items2">
-                                    <select name="select">
-                                        <option value="">All Category</option>
-                                        <option value="">Category 1</option>
-                                        <option value="">Category 2</option>
-                                        <option value="">Category 3</option>
-                                        <option value="">Category 4</option>
+                                    <select onchange="changeCategory(this.value)" name="job-category">
+                                        <option value="all">All Category</option>
+                                        <option value="cat1">Category 1</option>
+                                        <option value="cat2">Category 2</option>
+                                        <option value="cat3">Category 3</option>
                                     </select>
                                 </div>
                                 <!--  Select job items End-->
@@ -69,19 +53,11 @@
                                         <h4>Job Type</h4>
                                     </div>
                                     <label class="container">Full Time
-                                        <input type="checkbox" >
+                                        <input onchange="changeJobType(this)" value="Full-Time" type="checkbox" <%= checked.nature==="Full-Time"?"checked":"" %>>
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">Part Time
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Remote
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">Freelance
-                                        <input type="checkbox">
+                                        <input onchange="changeJobType(this)" value="Part-Time" type="checkbox" <%= checked.nature==="Part-Time"?"checked":"" %>>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -94,41 +70,19 @@
                                </div>
                                 <!-- Select job items start -->
                                 <div class="select-job-items2">
-                                    <select name="select">
-                                        <option value="">Anywhere</option>
-                                        <option value="">Category 1</option>
-                                        <option value="">Category 2</option>
-                                        <option value="">Category 3</option>
-                                        <option value="">Category 4</option>
+                                    <select onchange="changeLocation(this.value)" name="select">
+                                        <option value="Anywhere">Anywhere</option>
+                                        <option <%= checked["location.country"]==="Nigeria"?"selected":"" %> value="Nigeria">Nigeria</option>
+                                        <option <%= checked["location.country"]==="Ghana"?"selected":"" %> value="Ghana">Ghana</option>
                                     </select>
                                 </div>
                                 <!--  Select job items End-->
                                 <!-- select-Categories start -->
-                                <div class="select-Categories pt-80 pb-50">
-                                    <div class="small-section-tittle2">
-                                        <h4>Experience</h4>
-                                    </div>
-                                    <label class="container">1-2 Years
-                                        <input type="checkbox" >
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">2-3 Years
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">3-6 Years
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">6-more..
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
+                                
                                 <!-- select-Categories End -->
                             </div>
                             <!-- single three -->
-                            <div class="single-listing">
+                            <div class="single-listing mt-100">
                                 <!-- select-Categories start -->
                                 <div class="select-Categories pb-50">
                                     <div class="small-section-tittle2">
@@ -198,7 +152,9 @@
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="count-job mb-35">
-                                            <span>39, 782 Jobs found</span>
+                                            <div class="small-section-tittle2">
+                                                <h4><%= totalJobs %> Jobs found</h4>
+                                            </div>
                                             <!-- Select job items start -->
                                             <div class="select-job-items">
                                                 <span>Sort by</span>
@@ -214,9 +170,11 @@
                                     </div>
                                 </div>
                                 <!-- Count of Job list End -->
-                                <% jobs.forEach(job => { %> 
-                                    <%- include("./includes/job.ejs", {job}) %> 
-                                <% }) %> 
+                                <div class="all-jobs">
+                                    <% jobs.forEach(job => { %> 
+                                        <%- include("./includes/job.ejs", {job}) %> 
+                                    <% }) %> 
+                                </div>
                         <!-- Featured_job_end -->
                     </div>
                 </div>
@@ -248,6 +206,9 @@
     <%- include('./includes/Footer.ejs') %> 
 
 	<!-- JS here -->
+    <script>
+        const csrf_token = `<%= csrfToken %>`
+    </script>
 	<%- include('./includes/Scripts.ejs') %> 
         
     </body>
