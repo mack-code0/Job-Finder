@@ -32,13 +32,14 @@ app.use(app_session({
 app.use(csrfProtection)
 app.use(flash())
 
+console.log(new Date(new Date().setDate(new Date().getDate() - 100)).toLocaleDateString());
 
 app.use(async (req, res, next) => {
     const company = await Company.findById(req.session.user_id)
     const employee = await Employee.findById(req.session.user_id)
-    if(company){
+    if (company) {
         req.user = company
-    }else if(employee){
+    } else if (employee) {
         req.user = employee
     }
     next()

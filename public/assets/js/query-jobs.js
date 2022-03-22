@@ -1,30 +1,48 @@
+let queriesArr = window.location.href.split("?")[1].split("&")
+let queryString = window.location.search
+
 const changeCategory = (value) => {
     alert(value)
 }
 
+const changeTime = (checkbox)=>{
+    const date = new Date()
+    if(checkbox.checked){
+        alert()
+    }else{
+
+    }
+}
+
 const changeJobType = (element) => {
     if (element.checked) {
-        const url = window.location.search
-        if (!url) {
+        if (!queryString) {
             return window.open("/job-listing/?nature=" + element.value, "_self")
         }
-        const queries = window.location.href.split("?")[1].split("&")
-        queries.push("nature=" + element.value)
-        window.open(`/job-listing/?${queries.join("&")}`, "_self")
+        queriesArr.push("nature=" + element.value)
+        window.open(`/job-listing/?${queriesArr.join("&")}`, "_self")
     } else {
-        alert("Unchecked")
+        queriesArr.splice(queriesArr.findIndex(e => e.includes("nature")), 1)
+        window.open(`/job-listing/?${queriesArr.join("&")}`, "_self")
     }
 }
 
 const changeLocation = (location) => {
-    const url = window.location.search
-    if (!url) {
+    const index = queriesArr.findIndex(e => e.includes("location"))
+
+    if (location === "Anywhere") {
+        if (index >= 0) {
+            queriesArr.splice(index, 1)
+        }
+        return window.open(`/job-listing/?${queriesArr.join("&")}`, "_self")
+    }
+    if (!queryString) {
         return window.open("/job-listing/?location=" + location, "_self")
     }
-    const queries = window.location.href.split("?")[1].split("&")
-    const index = queries.findIndex(e => e.includes("location"))
-    queries[index] = "location=" + location
-    window.open(`/job-listing/?${queries.join("&")}`, "_self")
+
+    index < 0 ? queriesArr.push("location=" + location) : queriesArr[index] = "location=" + location
+
+    window.open(`/job-listing/?${queriesArr.join("&")}`, "_self")
 }
 
 
@@ -44,7 +62,7 @@ const changeLocation = (location) => {
 
 // $.ajax({
     //     type: "POST",
-    //     url: "/change-location",
+    //     queryString: "/change-location",
     //     data: { _csrf: csrf_token, location: value },
     //     success: (result) => {
     //         for(doc of document.querySelector(".all-jobs"))

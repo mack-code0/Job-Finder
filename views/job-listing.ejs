@@ -53,11 +53,11 @@
                                         <h4>Job Type</h4>
                                     </div>
                                     <label class="container">Full Time
-                                        <input onchange="changeJobType(this)" value="Full-Time" type="checkbox" <%= checked.nature==="Full-Time"?"checked":"" %>>
+                                        <input onchange="changeJobType(this)" value="Full-Time" type="checkbox" <% if(typeof checked.nature !=="undefined"){ %><%= checked.nature.indexOf("Full-Time")>-1?"checked":"" %><% } %>>
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">Part Time
-                                        <input onchange="changeJobType(this)" value="Part-Time" type="checkbox" <%= checked.nature==="Part-Time"?"checked":"" %>>
+                                        <input onchange="changeJobType(this)" value="Part-Time" type="checkbox" <% if(typeof checked.nature !=="undefined"){ %><%= checked.nature.indexOf("Part-Time")>-1?"checked":"" %><% } %>>
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -71,7 +71,7 @@
                                 <!-- Select job items start -->
                                 <div class="select-job-items2">
                                     <select onchange="changeLocation(this.value)" name="select">
-                                        <option value="Anywhere">Anywhere</option>
+                                        <option>Anywhere</option>
                                         <option <%= checked["location.country"]==="Nigeria"?"selected":"" %> value="Nigeria">Nigeria</option>
                                         <option <%= checked["location.country"]==="Ghana"?"selected":"" %> value="Ghana">Ghana</option>
                                     </select>
@@ -89,11 +89,11 @@
                                         <h4>Posted Within</h4>
                                     </div>
                                     <label class="container">Any
-                                        <input type="checkbox" >
+                                        <input onchange="changeTime(this)" checked type="checkbox" value="any">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">Today
-                                        <input type="checkbox" checked="checked active">
+                                        <input onchange="changeTime(this)" type="checkbox" value="today">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">Last 2 days
